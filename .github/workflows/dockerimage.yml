@@ -20,6 +20,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: docker.pkg.github.com/codyseavey/test-app/web:latest
+        name: codyseavey/test-app/web
         username: codyseavey
         password: ${{ secrets.GITHUB_PACKAGE_TOKEN }}
+        registry: docker.pkg.github.com
