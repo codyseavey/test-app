@@ -1,11 +1,12 @@
 package main
 
 import (
-	"log"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"github.com/shurcooL/vfsgen"
 )
+
+//go:generate go run -mod=vendor vfs.go
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	file, err := assets.Open("/index.html")
@@ -24,13 +25,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	var fs http.FileSystem = http.Dir("./templates")
-
-	err := vfsgen.Generate(fs, vfsgen.Options{})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	
 	http.HandleFunc("/", indexHandler)
 	log.Println("starting app...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
